@@ -1,0 +1,6 @@
+{
+  "MONGO_URL_SERVER": "mongodb+srv://anausanfajardo:tDmK2iHuBtdMC0IN@cluster0.ue7guij.mongodb.net/?retryWrites=true&w=majority",
+  "MONGO_URL_LOCAL": "mongodb://localhost:27017/",
+  "LOCAL_PORT": 27017,
+  "MONGO_DB": "cattle_inventory"
+}
