@@ -1,0 +1,5 @@
+Flask
+certifi
+pymongo
+bson
+flask_cors
