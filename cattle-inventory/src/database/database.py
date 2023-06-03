@@ -1,3 +1,5 @@
+import os
+
 from pymongo import MongoClient
 import json
 import certifi
@@ -6,7 +8,7 @@ ca = certifi.where()
 
 
 def load_config():
-    with open("src/database/config.json", "r") as f:
+    with open(f'{os.path.dirname(os.path.abspath(__file__))}/config.json') as f:
         return json.load(f)
 
 
