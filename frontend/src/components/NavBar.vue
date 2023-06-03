@@ -20,6 +20,9 @@
           <li class="nav-item">
             <a v-on:click="bovino" class="nav-link" href="#">Crear Bovino</a>
           </li>
+          <li v-on:click="logOut" class="nav-item">
+            <a class="nav-link" href="#">Cerrar Sesion</a>
+          </li>
         </ul>
       </div>
     </nav>
