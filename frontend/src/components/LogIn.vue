@@ -69,14 +69,16 @@ export default {
   methods: {
     processLogInUser: function () {
       axios.post(
-          "https://axios.com/login/",
+          // "https://axios.com/login/",
+          "https://jsonplaceholder.typicode.com/users",
           this.user,
           {headers: {}}
       ).then((result) => {
+        console.log(result)
         let dataLogin = {
           username: this.user.username,
-          token_access: result.data.access,
-          token_refresh: result.data.refresh,
+          // token_access: result.data.access,
+          // token_refresh: result.data.refresh,
         }
 
         const emits = ['completedLogIn'];
@@ -84,15 +86,15 @@ export default {
 
         // this.$emit('completedLogIn',dataLogin)
       }).catch((err) => {
-        if (err.response.status === 401) {
-          alert("ERROR 401: Credenciales Incorrectas.");
-        }
-        if (err.response.status === 400) {
-          alert("ERROR 400: Bad request.");
-        }
-        if (err.response.status === 500) {
-          alert("ERROR 500: Internal server error.");
-        }
+        // if (err.response.status === 401) {
+        //   alert("ERROR 401: Credenciales Incorrectas.");
+        // }
+        // if (err.response.status === 400) {
+        //   alert("ERROR 400: Bad request.");
+        // }
+        // if (err.response.status === 500) {
+        //   alert("ERROR 500: Internal server error.");
+        // }
       });
     },
     loadSignUp: function () {
