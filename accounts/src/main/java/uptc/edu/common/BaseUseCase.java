@@ -2,6 +2,6 @@ package uptc.edu.common;
 
 public abstract class BaseUseCase<T> {
 
-    public abstract T invoke();
+    public abstract T invoke(T... args);
 
 }
