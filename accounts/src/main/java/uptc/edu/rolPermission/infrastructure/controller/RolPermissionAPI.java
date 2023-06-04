@@ -2,23 +2,26 @@ package uptc.edu.rolPermission.infrastructure.controller;
 
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uptc.edu.permission.application.GetPermissionUseCase;
 import uptc.edu.rol.application.GetRolUseCase;
-import uptc.edu.rolPermission.application.CreateRolPermissionUsecase;
+import uptc.edu.rolPermission.application.CreateRolPermissionUseCase;
+import uptc.edu.rolPermission.application.GetAllRolPermissionUseCase;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/rol-permission")
 public class RolPermissionAPI {
 
-    private final CreateRolPermissionUsecase createRolPermissionUsecase;
-
+    private final CreateRolPermissionUseCase createRolPermissionUsecase;
     private final GetRolUseCase getRolUseCase;
     private final GetPermissionUseCase getPermissionUseCase;
+    private final GetAllRolPermissionUseCase getAllRolUseCase;
 
-    public RolPermissionAPI(CreateRolPermissionUsecase createRolPermissionUsecase, GetRolUseCase getRolUseCase, GetPermissionUseCase getPermissionUseCase) {
+    public RolPermissionAPI(CreateRolPermissionUseCase createRolPermissionUsecase, GetAllRolPermissionUseCase getAllRolUseCase, GetRolUseCase getRolUseCase, GetPermissionUseCase getPermissionUseCase) {
         this.createRolPermissionUsecase = createRolPermissionUsecase;
+        this.getAllRolUseCase = getAllRolUseCase;
         this.getRolUseCase = getRolUseCase;
         this.getPermissionUseCase = getPermissionUseCase;
     }
@@ -29,6 +32,11 @@ public class RolPermissionAPI {
         var rol = getRolUseCase.invoke(id_rol).orElse(null);
         var permission = getPermissionUseCase.invoke(id_permission).orElse(null);
         createRolPermissionUsecase.invoke(rol, permission);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        return new ResponseEntity<>(getAllRolUseCase.invoke(), HttpStatus.OK);
     }
 
 

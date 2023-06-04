@@ -1,6 +1,5 @@
 package uptc.edu.rolPermission.application;
 
-import uptc.edu.common.BaseUseCase;
 import uptc.edu.common.UseCase;
 import uptc.edu.permission.domain.models.Permission;
 import uptc.edu.rol.domain.models.Rol;
@@ -8,11 +7,11 @@ import uptc.edu.rolPermission.domain.model.RolPermission;
 import uptc.edu.rolPermission.domain.repository.RolPermissionRepository;
 
 @UseCase
-public class CreateRolPermissionUsecase{
+public class CreateRolPermissionUseCase {
 
     private final RolPermissionRepository repository;
 
-    public CreateRolPermissionUsecase(RolPermissionRepository repository) {
+    public CreateRolPermissionUseCase(RolPermissionRepository repository) {
         this.repository = repository;
     }
 
