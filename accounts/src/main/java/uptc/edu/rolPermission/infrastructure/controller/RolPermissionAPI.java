@@ -28,10 +28,15 @@ public class RolPermissionAPI {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("rol/{id_rol}/permission/{id_permission}")
-    public void create(@PathVariable String id_rol, @PathVariable String id_permission) {
+    public ResponseEntity<?> create(@PathVariable String id_rol, @PathVariable String id_permission) {
         var rol = getRolUseCase.invoke(id_rol).orElse(null);
         var permission = getPermissionUseCase.invoke(id_permission).orElse(null);
-        createRolPermissionUsecase.invoke(rol, permission);
+        if (rol == null || permission == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else {
+            createRolPermissionUsecase.invoke(rol, permission);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
     }
 
     @GetMapping
