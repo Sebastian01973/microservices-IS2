@@ -5,6 +5,9 @@ import uptc.edu.permission.domain.models.Permission;
 import uptc.edu.permission.domain.repository.PermissionRepository;
 import uptc.edu.permission.infrastructure.repository.dto.PermissionDto;
 import uptc.edu.permission.infrastructure.repository.mapper.PermissionMapper;
+import uptc.edu.rol.domain.models.Rol;
+import uptc.edu.rol.infrastructure.repository.dto.RolDto;
+import uptc.edu.rol.infrastructure.repository.mapper.RolMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,14 +28,16 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     }
 
     @Override
-    public Optional<Permission> updatePermission(Permission permission) {
-        Optional<PermissionDto> currentPermission = permissionRepositoryMongo.findById(permission.id());
-        if (currentPermission.isPresent()) {
-            currentPermission.get().setUrl(permission.url());
-            currentPermission.get().setMethod(permission.method());
-            return currentPermission.map(permissionRepositoryMongo::save).map(PermissionMapper::toDomain);
+    public Optional<Permission> updatePermission(String id,Permission permission) {
+        Optional<Permission> currentPermission = getPermissionById(id);
+        if (!currentPermission.isEmpty()) {
+            PermissionDto permissionDto = PermissionMapper.toDto(currentPermission.get());
+            permissionDto.setUrl(permission.url());
+            permissionDto.setMethod(permission.method());
+            permissionRepositoryMongo.save(permissionDto);
         }
-        return Optional.empty();
+        currentPermission = getPermissionById(id);
+        return currentPermission;
     }
 
     @Override

@@ -16,7 +16,7 @@ public interface RolRepository {
 
     boolean deleteRol(String id);
 
-    Optional<Rol> updateRol(Rol rol);
+    Optional<Rol> updateRol(String id,Rol rol);
 
     List<Rol> getAllRoles();
 
