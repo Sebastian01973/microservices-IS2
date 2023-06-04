@@ -48,7 +48,6 @@ public class RolAPI {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody RolCreateRequest request) {
-        // Arreglar cuando no se le pasa bien id, lanza un error 500
         return updateRolUseCase.invoke(id, request.name(), request.description())
                 .map(rol -> new ResponseEntity<>(rol, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

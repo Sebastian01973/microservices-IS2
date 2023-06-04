@@ -12,7 +12,7 @@ public interface PermissionRepository {
 
     boolean deletePermission(String id);
 
-    Optional<Permission> updatePermission(Permission permission);
+    Optional<Permission> updatePermission(String id,Permission permission);
 
     List<Permission> getAllPermissions();
 }

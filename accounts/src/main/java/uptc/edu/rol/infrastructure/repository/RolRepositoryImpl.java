@@ -8,6 +8,7 @@ import uptc.edu.rol.infrastructure.repository.mapper.RolMapper;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Component
 public class RolRepositoryImpl implements RolRepository {
@@ -26,19 +27,21 @@ public class RolRepositoryImpl implements RolRepository {
     }
 
     @Override
-    public Optional<Rol> updateRol(Rol rol) {
-        Optional<RolDto> currentRol = rolRepositoryMongo.findById(rol.id());
-        if(currentRol != null) {
-            currentRol.get().setName(rol.name());
-            currentRol.get().setDescription(rol.description());
-            return currentRol.map(rolRepositoryMongo::save).map(RolMapper::toDomain);
+    public Optional<Rol> updateRol(String id, Rol rol) {
+        Optional<Rol> currentRol = getRolById(id);
+        if (!currentRol.isEmpty()) {
+            RolDto rolDto = RolMapper.toDto(currentRol.get());
+            rolDto.setName(rol.name());
+            rolDto.setDescription(rol.description());
+            rolRepositoryMongo.save(rolDto);
         }
-        return Optional.empty();
+        currentRol = getRolById(id);
+        return currentRol;
     }
 
     @Override
     public Rol saveRol(Rol rol) {
-         return RolMapper.toDomain(
+        return RolMapper.toDomain(
                 rolRepositoryMongo.save(RolMapper.toDto(rol))
         );
     }

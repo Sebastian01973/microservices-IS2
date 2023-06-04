@@ -16,7 +16,7 @@ public class UpdateRolUseCase {
     }
 
     public Optional<Rol> invoke(String id, String name, String description) {
-        return rolRepository.updateRol(new Rol(id, name, description));
+        return rolRepository.updateRol(id,new Rol(id,name, description));
     }
 
 }
