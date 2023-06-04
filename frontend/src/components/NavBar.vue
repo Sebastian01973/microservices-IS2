@@ -1,17 +1,11 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-      >
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item active">
@@ -19,6 +13,9 @@
           </li>
           <li class="nav-item">
             <a v-on:click="bovino" class="nav-link" href="#">Crear Bovino</a>
+          </li>
+          <li class="nav-item">
+            <a v-on:click="vaccine" class="nav-link" href="#">Vacuna</a>
           </li>
           <li v-on:click="logOut" class="nav-item">
             <a class="nav-link" href="#">Cerrar Sesion</a>
@@ -38,6 +35,9 @@ export default {
     },
     bovino: function () {
       this.$router.push({name: "bovino"})
+    },
+    vaccine: function () {
+      this.$router.push({name: "vaccine"})
     },
     logOut: function(){
       localStorage.clear();
