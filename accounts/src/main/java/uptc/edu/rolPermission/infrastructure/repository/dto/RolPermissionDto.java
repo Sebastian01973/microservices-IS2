@@ -20,6 +20,7 @@ public class RolPermissionDto {
     private PermissionDto permission;
 
     public RolPermissionDto(String id, RolDto rol, PermissionDto permission) {
+        this.id = id;
         this.rol = rol;
         this.permission = permission;
     }

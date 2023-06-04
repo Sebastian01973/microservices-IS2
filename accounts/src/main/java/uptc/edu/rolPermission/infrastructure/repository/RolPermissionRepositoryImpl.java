@@ -24,7 +24,7 @@ public class RolPermissionRepositoryImpl implements RolPermissionRepository {
     @Override
     public List<RolPermission> findAll() {
         List<RolPermissionDto> rolPermissionDtoList = rolPermissionRepositoryMongo.findAll();
-        return null;
+        return RolPermissionMapper.toDomain(rolPermissionDtoList);
     }
 
     @Override

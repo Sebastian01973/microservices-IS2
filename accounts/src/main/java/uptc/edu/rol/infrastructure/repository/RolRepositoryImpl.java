@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 @Component
 public class RolRepositoryImpl implements RolRepository {
 
-    private RolRepositoryMongo rolRepositoryMongo;
+    private final RolRepositoryMongo rolRepositoryMongo;
 
     public RolRepositoryImpl(RolRepositoryMongo rolRepositoryMongo) {
         this.rolRepositoryMongo = rolRepositoryMongo;
