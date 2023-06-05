@@ -51,6 +51,13 @@ public class RolPermissionRepositoryImpl implements RolPermissionRepository {
     }
 
     @Override
+    public RolPermission getRolPermissionByRolAndPermission(String idRol, String idPermission) {
+        return RolPermissionMapper.toDomain(
+                rolPermissionRepositoryMongo.getRolPermissionByRolAndPermission(idRol, idPermission)
+        );
+    }
+
+    @Override
     public List<RolPermission> findByRol(String idRol) {
         return null;
     }

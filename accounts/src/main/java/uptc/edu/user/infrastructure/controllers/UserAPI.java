@@ -101,4 +101,11 @@ public class UserAPI {
             return null;
         }
     }
+
+    @GetMapping("/validate-permission/rol/{id_rol}")
+    public ResponseEntity<?> validatePermission(@PathVariable String id_rol) {
+
+        return null;
+    }
+
 }
