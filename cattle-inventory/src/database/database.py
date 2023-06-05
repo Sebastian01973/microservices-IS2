@@ -1,10 +1,8 @@
 import os
 
-from pymongo import MongoClient
 import json
-import certifi
-
-ca = certifi.where()
+from sqlalchemy import create_engine, Table, select, Column, Integer, String
+from sqlalchemy.orm import Session
 
 
 def load_config():
@@ -15,8 +13,9 @@ def load_config():
 def connect_to_db():
     data_config = load_config()
     try:
-        client = MongoClient(data_config["MONGO_URL_SERVER"], tlsCAFile=ca)
-        db = client[data_config["MONGO_DB"]]
+        engine = create_engine(data_config["URL_DATABASE"])
+        session = Session(engine)
     except ConnectionError as e:
-        print('connection failure', e)
-    return db
+        print('Connection failure', e)
+    return session
+

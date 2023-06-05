@@ -28,8 +28,8 @@ def create_vaccine():
 def delete_vaccine(id):
     try:
         data = vaccineService.delete_vaccine(id)
-        if data["deleted_count"] == 0:
-            return jsonify({"message": "vaccine not found"}), 404
+        # if data["deleted_count"] == 0:
+        #     return jsonify({"message": "vaccine not found"}), 404
         return jsonify({"message": "vaccine Delete"}), 204
     except Exception as e:
         return jsonify({"error": e.args}), 500
@@ -39,6 +39,6 @@ def delete_vaccine(id):
 def update_vaccine(id):
     vaccine_data = request.get_json()
     vaccine_updated = vaccineService.update_vaccine(id, vaccine_data)
-    if vaccine_updated["updated_count"] == 0:
-        return jsonify({"message": "vaccine not found"}), 404
+    # if vaccine_updated["updated_count"] == 0:
+    #     return jsonify({"message": "vaccine not found"}), 404
     return jsonify({"message": "vaccine Updated"}), 200
