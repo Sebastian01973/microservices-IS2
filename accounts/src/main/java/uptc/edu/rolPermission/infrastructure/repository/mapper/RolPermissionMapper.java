@@ -5,6 +5,7 @@ import uptc.edu.rol.infrastructure.repository.mapper.RolMapper;
 import uptc.edu.rolPermission.domain.model.RolPermission;
 import uptc.edu.rolPermission.infrastructure.repository.dto.RolPermissionDto;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class RolPermissionMapper {
     }
 
     public static List<RolPermission> toDomain(List<RolPermissionDto> dtoList) {
-        List<RolPermission> rolPermissionArrayList = new java.util.ArrayList<>();
+        List<RolPermission> rolPermissionArrayList = new ArrayList<>();
         for (RolPermissionDto dto : dtoList) {
             rolPermissionArrayList.add(toDomain(dto));
         }

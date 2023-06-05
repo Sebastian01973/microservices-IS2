@@ -15,7 +15,7 @@ public class UpdatePermissionUseCase {
         this.permissionRepository = permissionRepository;
     }
 
-    public Optional<Permission> invoke(String id, String name, String description) {
-        return permissionRepository.updatePermission(id,new Permission(id, name, description));
+    public Optional<Permission> invoke(String id, String url, String method) {
+        return permissionRepository.updatePermission(id,new Permission(id, url, method));
     }
 }

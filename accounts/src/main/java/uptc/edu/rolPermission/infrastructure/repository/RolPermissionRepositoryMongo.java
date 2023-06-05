@@ -5,6 +5,6 @@ import uptc.edu.rolPermission.infrastructure.repository.dto.RolPermissionDto;
 
 
 
-public interface RolPermissionRepositoryMongo extends MongoRepository<RolPermissionDto, Integer> {
+public interface RolPermissionRepositoryMongo extends MongoRepository<RolPermissionDto, String> {
 
 }
