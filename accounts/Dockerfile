@@ -1,7 +1,7 @@
 FROM openjdk:17-alpine
 WORKDIR /app
 
-COPY target/accounts-1.0.0.jar accounts-1.0.0.jar
+COPY target/accounts-1.1.1.jar accounts-1.1.1.jar
 
 EXPOSE 8080
 
