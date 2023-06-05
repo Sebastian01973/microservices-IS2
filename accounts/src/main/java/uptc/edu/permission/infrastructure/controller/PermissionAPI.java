@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import uptc.edu.permission.application.*;
 import uptc.edu.permission.infrastructure.controller.requests.PermissionCreateRequest;
 
+import java.util.logging.Logger;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/permissions")
@@ -19,7 +21,12 @@ public class PermissionAPI {
     private final GetAllPermissionUseCase getAllPermissionUseCase;
     private final PermissionUrlAndMethod permissionUrlAndMethod;
 
-    public PermissionAPI(CreatePermissionUseCase createPermissionUseCase, GetPermissionUseCase getPermissionUseCase, DeletePermissionUseCase deletePermissionUseCase, UpdatePermissionUseCase updatePermissionUseCase, GetAllPermissionUseCase getAllPermissionUseCase, PermissionUrlAndMethod permissionUrlAndMethod) {
+    public PermissionAPI(CreatePermissionUseCase createPermissionUseCase,
+                         GetPermissionUseCase getPermissionUseCase,
+                         DeletePermissionUseCase deletePermissionUseCase,
+                         UpdatePermissionUseCase updatePermissionUseCase,
+                         GetAllPermissionUseCase getAllPermissionUseCase,
+                         PermissionUrlAndMethod permissionUrlAndMethod) {
         this.createPermissionUseCase = createPermissionUseCase;
         this.getPermissionUseCase = getPermissionUseCase;
         this.deletePermissionUseCase = deletePermissionUseCase;
@@ -62,12 +69,15 @@ public class PermissionAPI {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/url/{url}/method/{method}")
-    public ResponseEntity<?> getPermissionByUrlAndMethod(@PathVariable String url, @PathVariable String method) {
-        return null;
-//        return permissionUrlAndMethod.invoke(url, method)
-//                .map(permission -> new ResponseEntity<>(permission, HttpStatus.OK))
-//                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/validate")
+    public ResponseEntity<?> getPermissionByUrlAndMethod(@RequestBody PermissionCreateRequest request) {
+//        Logger.getLogger("PermissionAPI").info("url: " + request.url() + " method: " + request.method());
+        if (request.url() != null && request.method() != null) {
+            var permission = permissionUrlAndMethod.invoke(request.url(), request.method());
+            return new ResponseEntity<>(permission, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
