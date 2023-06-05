@@ -102,10 +102,5 @@ public class UserAPI {
         }
     }
 
-    @GetMapping("/validate-permission/rol/{id_rol}")
-    public ResponseEntity<?> validatePermission(@PathVariable String id_rol) {
-
-        return null;
-    }
 
 }
