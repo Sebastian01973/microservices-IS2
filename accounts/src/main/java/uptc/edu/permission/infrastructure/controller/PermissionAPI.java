@@ -47,7 +47,6 @@ public class PermissionAPI {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody PermissionCreateRequest request) {
-        // Arreglar cuando no se le pasa bien id, lanza un error 500
         return updatePermissionUseCase.invoke(id, request.url(), request.method())
                 .map(permission -> new ResponseEntity<>(permission, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -56,7 +55,7 @@ public class PermissionAPI {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
         if (deletePermissionUseCase.invoke(id)) {
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

@@ -42,7 +42,9 @@ public class RolRepositoryImpl implements RolRepository {
     @Override
     public Rol saveRol(Rol rol) {
         return RolMapper.toDomain(
-                rolRepositoryMongo.save(RolMapper.toDto(rol))
+                rolRepositoryMongo.save(
+                        RolMapper.toDto(rol)
+                )
         );
     }
 

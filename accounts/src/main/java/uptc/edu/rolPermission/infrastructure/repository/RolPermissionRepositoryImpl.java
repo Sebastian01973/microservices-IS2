@@ -28,8 +28,9 @@ public class RolPermissionRepositoryImpl implements RolPermissionRepository {
     }
 
     @Override
-    public Optional<RolPermission> findById(int id) {
-        return Optional.empty();
+    public Optional<RolPermission> findById(String id) {
+        Optional<RolPermissionDto> rolPermissionDto = rolPermissionRepositoryMongo.findById(id);
+        return rolPermissionDto.map(RolPermissionMapper::toDomain);
     }
 
     @Override
@@ -40,12 +41,17 @@ public class RolPermissionRepositoryImpl implements RolPermissionRepository {
     }
 
     @Override
-    public boolean delete(int id) {
-        return false;
+    public boolean delete(String id) {
+        return findById(id)
+                .map(rolPermission -> {
+                    rolPermissionRepositoryMongo.deleteById(id);
+                    return true;
+                })
+                .orElse(false);
     }
 
     @Override
-    public List<RolPermission> findByRol(int idRol) {
+    public List<RolPermission> findByRol(String idRol) {
         return null;
     }
 

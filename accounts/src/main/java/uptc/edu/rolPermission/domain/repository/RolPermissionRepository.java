@@ -9,10 +9,10 @@ import java.util.Optional;
 
 public interface RolPermissionRepository {
     List<RolPermission> findAll();
-    Optional<RolPermission> findById(int id);
+    Optional<RolPermission> findById(String id);
     RolPermission create(Rol rol, Permission permission);
-    boolean delete(int id);
+    boolean delete(String id);
 
-    List<RolPermission> findByRol(int idRol);
+    List<RolPermission> findByRol(String idRol);
     Optional<RolPermission> update(int id, int idRol, int idPermission);
 }
