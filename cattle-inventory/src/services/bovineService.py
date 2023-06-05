@@ -1,9 +1,6 @@
 from repositories.bovineRepository import BovineRepository
 from repositories.vaccineRepository import VaccineRepository
 from repositories.controlVaccineRepository import ControlVaccineRepository
-from models.bovine import Bovine
-from models.vaccine import Vaccine
-from models.controlVaccine import ControlVaccine
 from models import bovineType, typeMark
 from datetime import date
 
@@ -22,6 +19,8 @@ class BovineService:
 
     def get_bovine_by_id(self, id):
         bovine = self.bovine_repository.get_by_id(id)
+        if not bovine:
+            raise Exception("Bovine not found")
         return bovine.to_dict()
 
     def create_bovine(self, data):
@@ -42,6 +41,8 @@ class BovineService:
             data['bovine_id'] = id_bovine
             data['vaccine_id'] = id_vaccine
             data['application_date'] = date.today().strftime("%Y-%m-%d")
+        else:
+            raise Exception('Bovine or Vaccine not found')
         return self.control_vaccine_repository.create(data)
 
     def get_bovine_vaccines(self, id):

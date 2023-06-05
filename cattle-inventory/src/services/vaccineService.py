@@ -1,5 +1,4 @@
 from repositories.vaccineRepository import VaccineRepository
-from models.vaccine import Vaccine
 
 
 class VaccineService:
@@ -14,6 +13,8 @@ class VaccineService:
 
     def get_vaccine_by_id(self, id):
         vaccine = self.vaccineRepository.get_by_id(id)
+        if not vaccine:
+            raise Exception("Vaccine not found")
         return vaccine.to_dict()
 
     def create_vaccine(self, vaccine_data):
@@ -23,4 +24,8 @@ class VaccineService:
         return self.vaccineRepository.delete(id)
 
     def update_vaccine(self, id, vaccine_data):
-        return self.vaccineRepository.update(id, vaccine_data)
+        print(vaccine_data)
+        vaccine = self.vaccineRepository.get_by_id(id)
+        if vaccine is None or len(vaccine_data) < len(vaccine.to_dict()):
+            raise Exception('Missing parameters or vaccine not found')
+        self.vaccineRepository.update(id, vaccine_data)

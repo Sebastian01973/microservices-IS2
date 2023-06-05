@@ -1,8 +1,9 @@
 from typing import get_args, Generic, TypeVar
 import database.database as dbase
-from sqlalchemy import Table, MetaData, select, update, delete, insert
+from sqlalchemy import MetaData, update, delete, insert
 
 T = TypeVar('T')
+
 
 class RepositoryInterface(Generic[T]):
     def __init__(self):
@@ -18,9 +19,7 @@ class RepositoryInterface(Generic[T]):
         return self.session.query(self.table).all()
 
     def get_list(self, id):
-        # return self.session.query(self.table).where()
         return self.session.query(self.table).filter(self.table.bovine_id == id).all()
-
 
     def get_by_id(self, id):
         return self.session.query(self.table).get(id)
