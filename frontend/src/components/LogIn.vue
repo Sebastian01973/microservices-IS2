@@ -15,7 +15,7 @@
                 <p class="text-muted mb-4">App para el control de bovinos.</p>
                 <form v-on:submit.prevent="processLogInUser" class="form">
                   <div class="mb-3">
-                    <input id="username" v-model="user.username" type="text" placeholder="Username" required=""
+                    <input id="username" v-model="user.email" type="text" placeholder="Username" required=""
                            autofocus=""
                            class="form-control rounded-pill border-0 shadow-sm px-4"/>
                   </div>
@@ -61,7 +61,7 @@ export default {
   data: function () {
     return {
       user: {
-        username: "",
+        email: "",
         password: ""
       }
     }
@@ -69,32 +69,29 @@ export default {
   methods: {
     processLogInUser: function () {
       axios.post(
-          // "https://axios.com/login/",
-          "https://jsonplaceholder.typicode.com/users",
+          "https://microservices-is2-production.up.railway.app/users/validate",
           this.user,
           {headers: {}}
       ).then((result) => {
-        console.log(result)
         let dataLogin = {
-          username: this.user.username,
+          user: result.data.id
           // token_access: result.data.access,
           // token_refresh: result.data.refresh,
         }
-
         const emits = ['completedLogIn'];
         this.$emit(emits[0], dataLogin);
 
         // this.$emit('completedLogIn',dataLogin)
       }).catch((err) => {
-        // if (err.response.status === 401) {
-        //   alert("ERROR 401: Credenciales Incorrectas.");
-        // }
-        // if (err.response.status === 400) {
-        //   alert("ERROR 400: Bad request.");
-        // }
-        // if (err.response.status === 500) {
-        //   alert("ERROR 500: Internal server error.");
-        // }
+        if (err.response.status === 401) {
+          alert("ERROR 401: Credenciales Incorrectas.");
+        }
+        if (err.response.status === 400) {
+          alert("ERROR 400: Bad request.");
+        }
+        if (err.response.status === 500) {
+          alert("ERROR 500: Internal server error.");
+        }
       });
     },
     loadSignUp: function () {
