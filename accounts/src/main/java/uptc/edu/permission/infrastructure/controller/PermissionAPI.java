@@ -17,13 +17,15 @@ public class PermissionAPI {
     private final DeletePermissionUseCase deletePermissionUseCase;
     private final UpdatePermissionUseCase updatePermissionUseCase;
     private final GetAllPermissionUseCase getAllPermissionUseCase;
+    private final PermissionUrlAndMethod permissionUrlAndMethod;
 
-    public PermissionAPI(CreatePermissionUseCase createPermissionUseCase, GetPermissionUseCase getPermissionUseCase, DeletePermissionUseCase deletePermissionUseCase, UpdatePermissionUseCase updatePermissionUseCase, GetAllPermissionUseCase getAllPermissionUseCase) {
+    public PermissionAPI(CreatePermissionUseCase createPermissionUseCase, GetPermissionUseCase getPermissionUseCase, DeletePermissionUseCase deletePermissionUseCase, UpdatePermissionUseCase updatePermissionUseCase, GetAllPermissionUseCase getAllPermissionUseCase, PermissionUrlAndMethod permissionUrlAndMethod) {
         this.createPermissionUseCase = createPermissionUseCase;
         this.getPermissionUseCase = getPermissionUseCase;
         this.deletePermissionUseCase = deletePermissionUseCase;
         this.updatePermissionUseCase = updatePermissionUseCase;
         this.getAllPermissionUseCase = getAllPermissionUseCase;
+        this.permissionUrlAndMethod = permissionUrlAndMethod;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -60,5 +62,12 @@ public class PermissionAPI {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/url/{url}/method/{method}")
+    public ResponseEntity<?> getPermissionByUrlAndMethod(@PathVariable String url, @PathVariable String method) {
+        return null;
+//        return permissionUrlAndMethod.invoke(url, method)
+//                .map(permission -> new ResponseEntity<>(permission, HttpStatus.OK))
+//                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
 }
