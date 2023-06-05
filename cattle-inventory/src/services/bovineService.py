@@ -5,6 +5,7 @@ from models.bovine import Bovine
 from models.vaccine import Vaccine
 from models.controlVaccine import ControlVaccine
 from models import bovineType, typeMark
+from datetime import date
 
 
 class BovineService:
@@ -40,6 +41,7 @@ class BovineService:
         if bovine is not None and vaccine is not None:
             data['bovine_id'] = id_bovine
             data['vaccine_id'] = id_vaccine
+            data['application_date'] = date.today().strftime("%Y-%m-%d")
         return self.control_vaccine_repository.create(data)
 
     def get_bovine_vaccines(self, id):
