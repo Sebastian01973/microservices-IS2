@@ -69,7 +69,7 @@ def get_list_vaccines(id_bovine):
     try:
         vaccines_history = bovineService.get_bovine_vaccines(id_bovine)
     except Exception as e:
-        return jsonify({'Message' : str(e)}), 400
+        return jsonify({'Message': str(e)}), 400
     return jsonify(vaccines_history), 200
 
 

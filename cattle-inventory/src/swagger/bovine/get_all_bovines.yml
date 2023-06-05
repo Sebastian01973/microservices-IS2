@@ -1,0 +1,40 @@
+Endpoint returns a list of bovines
+---
+tags:
+  - bovine
+summary: Get all bovines
+description: Get all bovines
+operationId: getAllBovines
+produces:
+  - application/json
+parameters: [ ]
+responses:
+  '200':
+    description: OK
+    schema:
+      type: array
+      items:
+        $ref: '#/definitions/Bovine'
+  '404':
+    description: Not Found
+  '500':
+    description: Internal Server Error
+
+definitions:
+  Bovine:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      breed:
+        type: string
+      number_mask:
+        type: string
+      bovine_type:
+        type: string
+      type_mark:
+        type: string
+      purchase_date:
+        type: string
+        format: date-time
