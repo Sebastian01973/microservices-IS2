@@ -1,36 +1,54 @@
 from repositories.bovineRepository import BovineRepository
 from repositories.vaccineRepository import VaccineRepository
+from repositories.controlVaccineRepository import ControlVaccineRepository
 from models.bovine import Bovine
 from models.vaccine import Vaccine
+from models.controlVaccine import ControlVaccine
+from models import bovineType, typeMark
 
 
 class BovineService:
 
     def __init__(self):
-        self.bovineRepository = BovineRepository()
-        self.vaccineRepository = VaccineRepository()
+        self.bovine_repository = BovineRepository()
+        self.vaccine_repository = VaccineRepository()
+        self.control_vaccine_repository = ControlVaccineRepository()
 
     def get_all_bovines(self):
-        return self.bovineRepository.find_all()
+        bovines = self.bovine_repository.get_all()
+        serialized_bovines = [bovine.to_dict() for bovine in bovines]
+        return serialized_bovines
 
     def get_bovine_by_id(self, id):
-        bovine = Bovine(self.bovineRepository.find_by_id(id))
-        return bovine.__dict__
+        bovine = self.bovine_repository.get_by_id(id)
+        return bovine.to_dict()
 
-    def create_bovine(self, bovine):
-        bovine = Bovine(bovine)
-        return self.bovineRepository.save(bovine)
+    def create_bovine(self, data):
+        data['bovine_type'] = bovineType.get_gender(data['bovine_type'])
+        data['type_mark'] = typeMark.get_type_mark(data['type_mark']).upper()
+        return self.bovine_repository.create(data)
 
     def delete_bovine(self, id):
-        return self.bovineRepository.delete(id)
+        return self.bovine_repository.delete(id)
 
-    def update_bovine(self, id, bovine_data):
-        bovine = Bovine(bovine_data)
-        return self.bovineRepository.update(id, bovine)
+    def update_bovine(self, id, data):
+        return self.bovine_repository.update(id, data)
 
-    def asssign_vaccine(self, id_bovine, id_vaccine, date):
-        bovine = Bovine(self.bovineRepository.find_by_id(id_bovine))
-        vaccine = Vaccine(self.vaccineRepository.find_by_id(id_vaccine))
-        vaccine.date = date
-        bovine.vaccines.append(vaccine.__dict__)
-        return self.bovineRepository.save(bovine)
+    def asssign_vaccine(self, id_bovine, id_vaccine, data):
+        bovine = self.bovine_repository.get_by_id(id_bovine)
+        vaccine = self.vaccine_repository.get_by_id(id_vaccine)
+        if bovine is not None and vaccine is not None:
+            data['bovine_id'] = id_bovine
+            data['vaccine_id'] = id_vaccine
+        return self.control_vaccine_repository.create(data)
+
+    def get_bovine_vaccines(self, id):
+        bovine = self.get_bovine_by_id(id)
+        if bovine is not None:
+            control_vaccine = self.control_vaccine_repository.get_list(id)
+            controls = [c.to_dict() for c in control_vaccine]
+            return controls
+        return None
+
+    def delete_bovine_vaccine(self, id):
+        return self.control_vaccine_repository.delete(id)

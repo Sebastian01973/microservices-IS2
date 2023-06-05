@@ -1,4 +1,4 @@
-from repositories.repositoryInterface import RepositoryInterface
+from repositories.InterfaceRepository import RepositoryInterface
 from models.vaccine import Vaccine
 
 
