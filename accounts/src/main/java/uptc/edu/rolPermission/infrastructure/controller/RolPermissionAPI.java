@@ -82,6 +82,10 @@ public class RolPermissionAPI {
         }
     }
 
+    @GetMapping("/validate-permission/rol/{id_rol}")
+    public ResponseEntity<?> validatePermission(@PathVariable String id_rol, @RequestParam String permission) {
 
+        return new ResponseEntity<>(validateUserUseCase.invoke(id_rol, permission), HttpStatus.OK);
+    }
 
 }

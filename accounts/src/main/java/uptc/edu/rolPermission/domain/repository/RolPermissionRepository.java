@@ -13,6 +13,8 @@ public interface RolPermissionRepository {
     RolPermission create(Rol rol, Permission permission);
     boolean delete(String id);
 
+    RolPermission getRolPermissionByRolAndPermission(String idRol, String idPermission);
+
     List<RolPermission> findByRol(String idRol);
     Optional<RolPermission> update(int id, int idRol, int idPermission);
 }
