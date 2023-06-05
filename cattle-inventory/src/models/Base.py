@@ -1,7 +1,0 @@
-from sqlalchemy.ext.declarative import declarative_base
-
-BaseModel = declarative_base()
-
-
-class Base(BaseModel):
-    pass
