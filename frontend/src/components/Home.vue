@@ -51,7 +51,6 @@ import NavBar from "@/components/NavBar.vue";
     </div>
   </section>
   <div>
-    <br><br>
     <hr>
   </div>
   <!-- End About Section -->
