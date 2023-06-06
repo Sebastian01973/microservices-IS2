@@ -1,3 +1,5 @@
+import json
+
 from flask import Blueprint, request, jsonify
 from services.bovineService import BovineService
 
@@ -31,7 +33,7 @@ def create_bovine():
         created_bovine = bovineService.create_bovine(bovine_data)
     except Exception as e:
         return jsonify({'Message': 'Bad Request'}), 400
-    return jsonify(created_bovine), 201
+    return jsonify({'Message':'Bovine created'}), 201
 
 
 @bovine.route('/bovine/<id>', methods=['DELETE'])
@@ -61,7 +63,7 @@ def assign_vaccine(id_bovine, id_vaccine):
         bovine = bovineService.asssign_vaccine(id_bovine, id_vaccine, data)
     except Exception as e:
         return jsonify({'Message': str(e)}), 400
-    return jsonify(bovine), 200
+    return jsonify({"Message":"Vaccine assignated to bovine with id "+id_bovine}), 200
 
 
 @bovine.route('/bovine/vaccines/<id_bovine>', methods=['GET'])

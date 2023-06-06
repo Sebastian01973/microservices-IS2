@@ -12,9 +12,9 @@ class RepositoryInterface(Generic[T]):
         self.metaData = MetaData()
 
     def create(self, data):
-        self.session.execute(insert(self.table).values(data))
+        result = self.session.execute(insert(self.table).values(data))
         self.session.commit()
-
+        return result
     def get_all(self):
         return self.session.query(self.table).all()
 

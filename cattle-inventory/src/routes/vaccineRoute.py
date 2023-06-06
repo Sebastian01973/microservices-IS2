@@ -30,7 +30,7 @@ def create_vaccine():
         created_vaccine = vaccineService.create_vaccine(vaccine_data)
     except Exception as e:
         return jsonify({'Message' : str(e)}), 400
-    return jsonify(created_vaccine), 201
+    return jsonify({'Message':'Vaccine created'}), 201
 
 
 @vaccine.route('/vaccine/<id>', methods=['DELETE'])
