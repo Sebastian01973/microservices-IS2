@@ -97,4 +97,17 @@ public class RolPermissionAPI {
         else
             return new ResponseEntity<>(validateRolPermissionUsecase.invoke(theRol.id(), thePermission.id()), HttpStatus.OK);
     }
+
+    @GetMapping("/validate/{rod_id}")
+    public ResponseEntity<?> validateRol(@PathVariable String rod_id, @RequestBody PermissionCreateRequest request) {
+        var theRol = getRolUseCase.invoke(rod_id).orElse(null);
+        Logger.getLogger("PermissionAPI").info("url: " + request.url() + " method: " + request.method());
+        if (request.url() != null && request.method() != null && theRol != null) {
+            var permission = permissionUrlAndMethod.invoke(request.url(), request.method());
+            Logger.getLogger("PermissionAPI").info("permission: " + permission.id());
+            return new ResponseEntity<>(validateRolPermissionUsecase.invoke(theRol.id(),permission.id()), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
