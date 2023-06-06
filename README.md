@@ -13,7 +13,7 @@
 
 ## 📝 Recursos
 
-Academic API utiliza 2 proyectos de GITHUB:
+El siguiente repositorio cuenta con 4 despliegues:
 - Frontend: https://vercel.com/jhon-acevedo/cow-shield/8ZkZc88ovCU9eXeeY267DyCwkR7G
 - APIGateway: https://microservices-is2-production-0e1c.up.railway.app/
 - BackendSecurity: https://microservices-is2-production.up.railway.app/
