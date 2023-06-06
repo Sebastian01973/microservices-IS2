@@ -1,0 +1,5 @@
+{
+  "LOCAL_URL": "mysql+mysqlconnector://root:mysql@localhost:3306/cattle_inventory",
+  "LOCAL_PORT": 5432,
+  "URL_DATABASE": "mysql+mysqlconnector://root:UQSrcaIbgKBIxwm89lTm@containers-us-west-193.railway.app:6951/railway"
+}

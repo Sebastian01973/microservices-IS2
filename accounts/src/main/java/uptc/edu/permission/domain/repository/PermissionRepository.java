@@ -15,4 +15,7 @@ public interface PermissionRepository {
     Optional<Permission> updatePermission(String id,Permission permission);
 
     List<Permission> getAllPermissions();
+
+    Permission getPermissionByUrlAndMethod(String url, String method);
+
 }

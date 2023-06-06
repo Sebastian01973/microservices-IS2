@@ -2,6 +2,7 @@ package uptc.edu.rolPermission.infrastructure.repository;
 
 import org.springframework.stereotype.Component;
 import uptc.edu.permission.domain.models.Permission;
+import uptc.edu.permission.infrastructure.repository.mapper.PermissionMapper;
 import uptc.edu.rol.domain.models.Rol;
 import uptc.edu.rol.infrastructure.repository.dto.RolDto;
 import uptc.edu.rolPermission.domain.model.RolPermission;
@@ -48,6 +49,13 @@ public class RolPermissionRepositoryImpl implements RolPermissionRepository {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    @Override
+    public RolPermission getRolPermissionByRolAndPermission(String idRol, String idPermission) {
+        return RolPermissionMapper.toDomain(
+                rolPermissionRepositoryMongo.getRolPermissionByRolAndPermission(idRol, idPermission)
+        );
     }
 
     @Override

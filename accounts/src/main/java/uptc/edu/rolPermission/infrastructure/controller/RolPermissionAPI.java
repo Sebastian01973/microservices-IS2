@@ -5,13 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uptc.edu.permission.application.GetPermissionUseCase;
+import uptc.edu.permission.application.PermissionUrlAndMethod;
+import uptc.edu.permission.infrastructure.controller.requests.PermissionCreateRequest;
 import uptc.edu.rol.application.GetRolUseCase;
-import uptc.edu.rolPermission.application.CreateRolPermissionUseCase;
-import uptc.edu.rolPermission.application.DeleteRolPermissionUseCase;
-import uptc.edu.rolPermission.application.GetAllRolPermissionUseCase;
-import uptc.edu.rolPermission.application.GetRolPermissionUseCase;
+import uptc.edu.rolPermission.application.*;
 import uptc.edu.user.application.UpdateUserUseCase;
 import uptc.edu.user.application.ValidateUserUseCase;
+
+import java.util.logging.Logger;
 
 @CrossOrigin
 @RestController
@@ -25,8 +26,9 @@ public class RolPermissionAPI {
 
     private final DeleteRolPermissionUseCase deleteRolPermissionUseCase;
     private final GetRolPermissionUseCase getRolPermissionUseCase;
-    private final UpdateUserUseCase updateUserUseCase;
-    private final ValidateUserUseCase validateUserUseCase;
+    private final PermissionUrlAndMethod permissionUrlAndMethod;
+
+    private final ValidateRolPermissionUsecase validateRolPermissionUsecase;
 
     public RolPermissionAPI(CreateRolPermissionUseCase createRolPermissionUsecase,
                             GetAllRolPermissionUseCase getAllRolUseCase,
@@ -35,7 +37,9 @@ public class RolPermissionAPI {
                             DeleteRolPermissionUseCase deleteRolPermissionUseCase,
                             GetRolPermissionUseCase getRolPermissionUseCase,
                             UpdateUserUseCase updateUserUseCase,
-                            ValidateUserUseCase validateUserUseCase) {
+                            ValidateUserUseCase validateUserUseCase,
+                            PermissionUrlAndMethod permissionUrlAndMethod,
+                            ValidateRolPermissionUsecase validateRolPermissionUsecase) {
 
         this.createRolPermissionUsecase = createRolPermissionUsecase;
         this.getAllRolUseCase = getAllRolUseCase;
@@ -43,8 +47,9 @@ public class RolPermissionAPI {
         this.getPermissionUseCase = getPermissionUseCase;
         this.deleteRolPermissionUseCase = deleteRolPermissionUseCase;
         this.getRolPermissionUseCase = getRolPermissionUseCase;
-        this.updateUserUseCase = updateUserUseCase;
-        this.validateUserUseCase = validateUserUseCase;
+        this.validateRolPermissionUsecase = validateRolPermissionUsecase;
+
+        this.permissionUrlAndMethod = permissionUrlAndMethod;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -56,7 +61,7 @@ public class RolPermissionAPI {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else {
             var rolPermission = createRolPermissionUsecase.invoke(rol, permission);
-            return new ResponseEntity<>(rolPermission,HttpStatus.CREATED);
+            return new ResponseEntity<>(rolPermission, HttpStatus.CREATED);
         }
     }
 
@@ -82,6 +87,27 @@ public class RolPermissionAPI {
         }
     }
 
+    @GetMapping("/rol/{id_rol}/permission/{id_permission}")
+    public ResponseEntity<?> validatePermission(@PathVariable String id_rol, @PathVariable String id_permission) {
+        var thePermission = getPermissionUseCase.invoke(id_permission).orElse(null);
+        var theRol = getRolUseCase.invoke(id_rol).orElse(null);
+        Logger.getLogger("theRol").info(theRol.toString());
+        if (thePermission == null || theRol == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(validateRolPermissionUsecase.invoke(theRol.id(), thePermission.id()), HttpStatus.OK);
+    }
 
-
+    @GetMapping("/validate/{rod_id}")
+    public ResponseEntity<?> validateRol(@PathVariable String rod_id, @RequestBody PermissionCreateRequest request) {
+        var theRol = getRolUseCase.invoke(rod_id).orElse(null);
+        Logger.getLogger("PermissionAPI").info("url: " + request.url() + " method: " + request.method());
+        if (request.url() != null && request.method() != null && theRol != null) {
+            var permission = permissionUrlAndMethod.invoke(request.url(), request.method());
+            Logger.getLogger("PermissionAPI").info("permission: " + permission.id());
+            return new ResponseEntity<>(validateRolPermissionUsecase.invoke(theRol.id(),permission.id()), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

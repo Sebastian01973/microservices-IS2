@@ -62,4 +62,11 @@ public class PermissionRepositoryImpl implements PermissionRepository {
         List<PermissionDto> permissionDtoList = permissionRepositoryMongo.findAll();
         return PermissionMapper.toDomain(permissionDtoList);
     }
+
+    @Override
+    public Permission getPermissionByUrlAndMethod(String url, String method) {
+        PermissionDto permissionDto = permissionRepositoryMongo.getPermission(url, method);
+        return PermissionMapper.toDomain(permissionDto);
+    }
+
 }
