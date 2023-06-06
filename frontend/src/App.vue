@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <header>
+<!--  <header>-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <div id="app" class="app">
       <div class="main-component">
@@ -13,7 +13,7 @@
         </router-view>
       </div>
     </div>
-  </header>
+<!--  </header>-->
 </template>
 
 <script>
@@ -39,7 +39,6 @@ export default {
     verifyAuth: function () {
       this.is_auth = localStorage.getItem("isAuth") || false;
       if (this.is_auth === false) {
-        console.log("No estas autenticado");
         this.$router.push({name: "root"});
       } else {
         this.$router.push({name: "homeUser"});
@@ -57,7 +56,7 @@ export default {
 
 <style scoped>
 
-.form-white.input-group>.form-control:focus {
+.form-white.input-group > .form-control:focus {
   border-color: #fff;
   box-shadow: inset 0 0 0 1px #fff;
 }

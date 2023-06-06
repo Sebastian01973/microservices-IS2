@@ -12,7 +12,7 @@
             <a v-on:click="home" class="nav-link" href="#">Inicio</a>
           </li>
           <li class="nav-item">
-            <a v-on:click="bovino" class="nav-link" href="#">Crear Bovino</a>
+            <a v-on:click="bovino" class="nav-link" href="#">Bovino</a>
           </li>
           <li class="nav-item">
             <a v-on:click="vaccine" class="nav-link" href="#">Vacuna</a>
@@ -39,10 +39,10 @@ export default {
     vaccine: function () {
       this.$router.push({name: "vaccine"})
     },
-    logOut: function(){
+    logOut: function () {
       localStorage.clear();
       alert("Sesion Cerrada");
-      localStorage.setItem("isAuth",false);
+      localStorage.setItem("isAuth", false);
       this.$router.push({name: "root"})
     },
   }
