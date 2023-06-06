@@ -11,8 +11,8 @@
           <div class="container">
             <div class="row">
               <div class="col-lg-10 col-xl-7 mx-auto">
-                <h3 class="display-6">Casttle Inventory</h3>
-                <p class="text-muted mb-4">App para el control de bovinos.</p>
+                <h3 class="display-6">CowShield</h3>
+                <p class="text-muted mb-4">Ganado sano, futuro seguro ¡Vacuna y previene en Boyacá</p>
                 <form v-on:submit.prevent="processLogInUser" class="form">
                   <div class="mb-3">
                     <input id="username" v-model="user.email" type="text" placeholder="Username" required=""
