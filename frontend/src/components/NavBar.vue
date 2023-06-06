@@ -19,9 +19,7 @@
           </li>
         </ul>
         <form class="d-flex">
-<!--          <li v-on:click="logOut" class="nav-item">-->
-            <a class="nav-link a-nav-class" href="#">Cerrar Sesion</a>
-<!--          </li>/-->
+            <a class="nav-link a-nav-class" v-on:click="logOut" href="#">Cerrar Sesion</a>
         </form>
       </div>
     </nav>
