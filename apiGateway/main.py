@@ -1,6 +1,6 @@
 import datetime
 import os
-from typing import re
+import re
 
 import requests
 from flask import Flask, jsonify, request
@@ -29,26 +29,28 @@ def clean_url(url):
     return url
 
 
-def validate_permission(role_id, permission_id):
-    url = url_backend_security + f"/rol/{str(role_id)}/permission/{str(permission_id)}"
-    print(url)
+def validate_permission(route,method,role_id):
+    url = url_backend_security + "rol-permission/validate/" + str(role_id)
     isPermission = False
-    response = requests.get(url,headers=headers)
+    body = {
+        "url":route,
+        "method": method
+    }
+    response = requests.get(url,json=body,headers=headers)
     try:
         data = response.json()
-        print(data)
-        if "_id" in data:
+        if "id" in data:
             isPermission = True
     except:
         pass
     return isPermission
 
-# @app.before_request
+
+@app.before_request
 def before_request_callback():
     endPoint = clean_url(request.path)
     excludeRoutes = ['/login']
-    if excludeRoutes.__contains__(request.path):
-        print("ruta excluida",request.path)
+    if excludeRoutes.__contains__(request.path):        
         pass
     elif verify_jwt_in_request():
         user = get_jwt_identity()
@@ -58,8 +60,6 @@ def before_request_callback():
                 return jsonify({"message": "Permission denied"}),401
         else:
             return jsonify({"message": "Permission denied"}),401
-
-
 
 
 # ------------------------- Endpoints ------------------------------- #
@@ -73,7 +73,7 @@ def index():
 def create_token():
     data = request.get_json()
     url = url_backend_security + 'users/validate'
-    print(url)
+    # print(url)
     response = requests.post(url, json=data, headers=headers)
     if response.status_code == 200:
         user = response.json()
@@ -90,6 +90,7 @@ def get_all_bovines():
     response = requests.get(url, headers=headers)
     return jsonify(response.json())
 
+
 @app.route('/bovine', methods=['POST'])
 def create_bovine():
     url = url_backend_bovines + 'bovine'
@@ -98,6 +99,7 @@ def create_bovine():
     json = response.json()
     return jsonify(json)
 
+
 @app.route('/bovine/<id>', methods=['GET'])
 def get_bovine_by_id(id):
     url = url_backend_bovines + 'bovine/'+id
@@ -105,12 +107,14 @@ def get_bovine_by_id(id):
     json = response.json()
     return jsonify(json)
 
+
 @app.route('/bovine/<id>', methods=['DELETE'])
 def delete_bovine(id):
     url = url_backend_bovines + 'bovine/'+id
     response = requests.delete(url, headers=headers)
     #json = response.json()
     return jsonify(), response.status_code
+
 
 @app.route('/bovine/<id>', methods=['PUT'])
 def update_bovine(id):
@@ -120,6 +124,7 @@ def update_bovine(id):
     json = response.json()
     return jsonify(json)
 
+
 @app.route('/bovine/<id_bovine>/vaccine/<id_vaccine>', methods=['PUT'])
 def assign_vaccine(id_bovine, id_vaccine):
     data = request.get_json()
@@ -127,6 +132,7 @@ def assign_vaccine(id_bovine, id_vaccine):
     response = requests.put(url, headers=headers, json=data)
     json = response.json()
     return jsonify(json)
+
 
 @app.route('/bovine/vaccines/<id_bovine>', methods=['GET'])
 def get_list_vaccines(id_bovine):
@@ -142,9 +148,6 @@ def delete_bovine_vaccine(id_control):
     response = requests.delete(url, headers=headers)
     # json = response.json()
     return jsonify(), response.status_code
-
-    
-
 
 
     ###########Vaccines############
