@@ -7,7 +7,7 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item active">
             <a v-on:click="home" class="nav-link" href="#">Inicio</a>
           </li>
@@ -17,10 +17,12 @@
           <li class="nav-item">
             <a v-on:click="vaccine" class="nav-link" href="#">Vacuna</a>
           </li>
-          <li v-on:click="logOut" class="nav-item">
-            <a class="nav-link" href="#">Cerrar Sesion</a>
-          </li>
         </ul>
+        <form class="d-flex">
+<!--          <li v-on:click="logOut" class="nav-item">-->
+            <a class="nav-link a-nav-class" href="#">Cerrar Sesion</a>
+<!--          </li>/-->
+        </form>
       </div>
     </nav>
   </div>
@@ -50,5 +52,8 @@ export default {
 </script>
 
 <style scoped>
-
+.a-nav-class{
+  color: #fff;
+  margin-right: 20px;
+}
 </style>
