@@ -66,6 +66,5 @@ p {
   color: #000000;
   padding-left: 30px;
   padding-right: 30px;
-//padding: 50px;
 }
 </style>
