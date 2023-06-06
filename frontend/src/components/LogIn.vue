@@ -69,19 +69,16 @@ export default {
   methods: {
     processLogInUser: function () {
       axios.post(
-          "https://microservices-is2-production.up.railway.app/users/validate",
+          "https://microservices-is2-production-0e1c.up.railway.app/login",
           this.user,
           {headers: {}}
       ).then((result) => {
         let dataLogin = {
-          user: result.data.id
-          // token_access: result.data.access,
-          // token_refresh: result.data.refresh,
+          user: result.data.id,
+          token_access: result.data.token,
         }
         const emits = ['completedLogIn'];
         this.$emit(emits[0], dataLogin);
-
-        // this.$emit('completedLogIn',dataLogin)
       }).catch((err) => {
         if (err.response.status === 401) {
           alert("ERROR 401: Credenciales Incorrectas.");
