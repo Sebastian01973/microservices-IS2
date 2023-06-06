@@ -16,7 +16,53 @@ app.config["JWT_SECRET_KEY"] = "super-secret"
 jwt = JWTManager(app)
 
 url_backend_security = os.getenv("URL_BACKEND_SECURITY")
+url_backend_bovines = os.getenv("URL_BACKEND_BOVINES")
 
+headers = {"Content-Type": "application/json; charset=utf-8"}
+
+
+def clean_url(url):
+    parts = request.path.split("/")
+    for part in parts:
+        if re.search('\\d',part):
+            url = url.replace(part,"?")
+    return url
+
+
+def validate_permission(role_id, permission_id):
+    url = url_backend_security + f"/rol/{str(role_id)}/permission/{str(permission_id)}"
+    print(url)
+    isPermission = False
+    response = requests.get(url,headers=headers)
+    try:
+        data = response.json()
+        print(data)
+        if "_id" in data:
+            isPermission = True
+    except:
+        pass
+    return isPermission
+
+# @app.before_request
+def before_request_callback():
+    endPoint = clean_url(request.path)
+    excludeRoutes = ['/login']
+    if excludeRoutes.__contains__(request.path):
+        print("ruta excluida",request.path)
+        pass
+    elif verify_jwt_in_request():
+        user = get_jwt_identity()
+        if user["rol"] is not None:
+            havePermission = validate_permission(endPoint,request.method,user["rol"]["id"])
+            if not havePermission:
+                return jsonify({"message": "Permission denied"}),401
+        else:
+            return jsonify({"message": "Permission denied"}),401
+
+
+
+
+# ------------------------- Endpoints ------------------------------- #
 
 @app.route('/')
 def index():
@@ -26,7 +72,6 @@ def index():
 @app.route('/login', methods=['POST'])
 def create_token():
     data = request.get_json()
-    headers = {"Content-Type": "application/json; charset=utf-8"}
     url = url_backend_security + 'users/validate'
     print(url)
     response = requests.post(url, json=data, headers=headers)
@@ -38,6 +83,12 @@ def create_token():
     else:
         return jsonify({"msg": "Bad username or password"}), 401
 
+
+@app.route('/bovine', methods=['GET'])
+def get_all_bovines():
+    url = url_backend_bovines + 'bovine'
+    response = requests.get(url, headers=headers)
+    return jsonify(response.json())
 
 
 
